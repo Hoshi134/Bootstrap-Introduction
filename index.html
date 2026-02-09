@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&display=swap" rel="stylesheet">
+
+    <title>Get to Know James</title>
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; 
+        }
+
+        .card { border-radius: 4px; border: 1px solid #33587e; transition: all 0.5s ease; background-color: white; }
+        .card-header { background-color: #e0dbc7; font-weight: bold; font-size: 1.25rem; border-bottom: 1px solid #dee2e6; color: rgb(70, 94, 126); }
+        .card-body { padding: 10px; font-size: 0.9rem; color: #6c757d; text-align: center; }
+
+        #search-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 9998;
+            backdrop-filter: blur(5px);
+        }
+
+        .focused-card {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) scale(1.2) !important;
+            z-index: 10000 !important;
+            width: 450px !important;
+            height: auto !important; 
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .dimmed {
+            opacity: 0.1;
+            filter: blur(2px);
+            pointer-events: none;
+        }
+
+        #landing-page {
+            background-color: #000000;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            transition: opacity 1s ease-out;
+        }
+
+        .hero-title {
+            font-family: 'Syncopate', sans-serif;
+            color: white;
+            font-size: 4rem;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .btn-find-out {
+            font-family: 'Helvetica', sans-serif;
+            background-color: white;
+            color: black;
+            border: none;
+            padding: 15px 40px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 0px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-find-out:hover {
+            background-color: #e0dbc7;
+            transform: scale(1.05);
+        }
+
+        #main-content {
+            display: none;
+            opacity: 0;
+            height: 100vh;
+            flex-direction: column;
+            transition: opacity 1s ease-in;
+        }
+
+        .scroll-fix-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="search-overlay" onclick="resetSearch()"></div>
+
+    <div id="landing-page">
+        <h1 class="hero-title">WHO'S JAMES?</h1>
+        <button class="btn-find-out" onclick="revealContent()">Find Out</button>
+    </div>
+
+    <div id="main-content">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #425e7a;">
+            <img src="C:\Users\user\Downloads\LOGO.png" width="30" height="30" class="d-inline-block align-top" style="border-radius: 20px;" alt="">
+            <a class="navbar-brand"> </a> 
+            <a class="navbar-brand" style="font-weight: bold; color: beige;" href="#">Hey! James</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="javascript:void(0)" onclick="returnToLanding()" style="color: beige;">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color: beige;" href="#" role="button" data-toggle="dropdown">Links</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="https://music.youtube.com/playlist?list=PLnxjpAxXwhMzEacKcGv9-KA_V4Sa1DO-O&si=dPdvZgH6zZiQC6tn" target="_blank">My Playlist</a>
+                            <a class="dropdown-item" href="https://www.imdb.com/title/tt3008034/" target="_blank">Favorite Movie</a>
+                        </div>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0" onsubmit="handleSearch(event)">
+                    <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search for cards..." aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" style="color: beige; border-color: beige;" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+
+        <div class="scroll-fix-wrapper">
+            <div class="d-flex justify-content-center py-2">
+                <h1 style="font-family: Helvetica; font-weight: bolder;">Who's James?</h1>
+            </div>
+
+            <div class="container" style="max-width: 1500px;">
+                <div class="row g-3 mb-3">
+                    <div class="col-4"><div class="card h-100"><div class="card-header">Hobbies</div><div class="card-body">Going to Gym, Playing Video Games, Listening to Music</div></div></div>
+                    <div class="col-4"><div class="card h-100"><div class="card-header">MBTI</div><div class="card-body">Introverted, Intuitive, Feeling, Perceiving (INFP)</div></div></div>
+                    <div class="col-4"><div class="card h-100"><div class="card-header">Favorite Color</div><div class="card-body">Navy Blue, Off-White, Black, Beige</div></div></div>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-8"><div class="card h-100"><div class="card-header">Goals</div><div class="card-body">My Ultimate Goal is to live Comfortably, Happy, and Faithful.</div></div></div>
+                    <div class="col-4"><div class="card h-100"><div class="card-header">Zodiac Sign</div><div class="card-body">Taurus</div></div></div>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-4"><div class="card h-100"><div class="card-header">Favorite Music Genre</div><div class="card-body">Neo Soul, K-Pop, RNB, Alternative/Indie</div></div></div>
+                    <div class="col-8"><div class="card h-100"><div class="card-header">Dream Places to Live In</div><div class="card-body">My dream places to live in are New Zealand, Singapore, and Switzerland.</div></div></div>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-8"><div class="card h-100"><div class="card-header">Motto</div><div class="card-body">"In a world where you can be anything, be kind."</div></div></div>
+                    <div class="col-4"><div class="card h-100"><div class="card-header">Favorite Musicals</div><div class="card-body">Heather, Wicked, Hairspray</div></div></div>
+                </div>
+                <div class="row g-3">
+                    <div class="col-3"><div class="card"><div class="card-header">Favorite Animal</div><div class="card-body">American Bully & St. Bernard</div></div></div>
+                    <div class="col-3"><div class="card"><div class="card-header">Favorite Ice Cream Flavor</div><div class="card-body">Chocolate, Coffee, Cookies</div></div></div>
+                    <div class="col-3"><div class="card"><div class="card-header">Favorite Movie</div><div class="card-body">Four Sisters and A Wedding</div></div></div>
+                    <div class="col-3"><div class="card"><div class="card-header">Favorite Food</div><div class="card-body">Caldereta, Paella, Biryani</div></div></div>
+                </div>
+            </div> 
+        </div> 
+    </div> 
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        const landing = document.getElementById('landing-page');
+        const content = document.getElementById('main-content');
+        const overlay = document.getElementById('search-overlay');
+
+        function revealContent() {
+            landing.style.opacity = '0';
+            setTimeout(() => {
+                landing.style.display = 'none';
+                content.style.display = 'flex';
+                setTimeout(() => { content.style.opacity = '1'; }, 50);
+            }, 1000);
+        }
+
+        function returnToLanding() {
+            resetSearch();
+            content.style.opacity = '0';
+            setTimeout(() => {
+                content.style.display = 'none';
+                landing.style.display = 'flex';
+                setTimeout(() => { landing.style.opacity = '1'; }, 50);
+            }, 1000);
+        }
+
+        function handleSearch(event) {
+            event.preventDefault();
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            
+            if (query === "") {
+                resetSearch();
+                return;
+            }
+
+            let found = false;
+            cards.forEach(card => {
+                const title = card.querySelector('.card-header').innerText.toLowerCase();
+                if (title.includes(query) && !found) {
+                    card.classList.add('focused-card');
+                    card.classList.remove('dimmed');
+                    overlay.style.display = 'block';
+                    found = true; 
+                } else {
+                    card.classList.add('dimmed');
+                    card.classList.remove('focused-card');
+                }
+            });
+            if (!found) resetSearch();
+        }
+
+        function resetSearch() {
+            const cards = document.querySelectorAll('.card');
+            overlay.style.display = 'none';
+            document.getElementById('searchInput').value = '';
+            cards.forEach(card => {
+                card.classList.remove('focused-card');
+                card.classList.remove('dimmed');
+            });
+        }
+    </script>
+</body>
+</html>
